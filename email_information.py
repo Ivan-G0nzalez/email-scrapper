@@ -2,6 +2,9 @@ import imaplib
 import email
 import pandas as pd
 import yaml
+import re
+
+pattern = r'^=\?UTF-8\?Q\?(.*?)\?='
 
 # Set your Gmail username and password in the credentials.yml file
 
@@ -27,11 +30,26 @@ my_email.select("Inbox")
 status, messages = my_email.search(None, "ALL")
 message_ids = messages[0].split()
 
-num_emails_to_fetch = 50
+num_emails_to_fetch = 100
 message_ids = message_ids[:num_emails_to_fetch]
 
 # Create a list to store the sender name and email address
 sender_info = []
+
+def correct_sender(information):
+    
+    if information[0] == '':
+        email = information[1]
+        sender = information[1].split("@")[0] 
+        return sender, email 
+    
+    match = re.search(pattern, information[0])
+    if match:
+        email = information[1]
+        sender = match.group(1).split("=")[0].replace('_', ' ')
+        return sender, email 
+
+    return information
 
 # Iterate through the list of emails
 for message_id in message_ids:
@@ -47,12 +65,16 @@ for message_id in message_ids:
         # This is a tupla
         information = email.utils.parseaddr(msg["From"])
         
-        sender, email_address = information
+        get_information = correct_sender(information)
+
+        sender, email_address = get_information
         data_dict["sender"] = sender
         data_dict["Email_address"] = email_address
 
         # Add the sender information to the list
         sender_info.append(data_dict)
+
+
 
 # Create a Pandas DataFrame from the list
 df = pd.DataFrame(sender_info)
