@@ -5,11 +5,11 @@
 <h3>Steps to run the script: </h3>
 
 <ol>
-    <li>Replace your credential in the *credentials.yml*: </li>
+    <li>Replace your credential in the <b>credentials.yml</b>: </li>
     <ul>
         <h4>To get the password for the credetials:</h4>
-        <li>Go to **Google Account**.</li>
-        <li>Go to **Security** is on the left side of the screen.</li>
+        <li>Go to <b>Google Account</b>.</li>
+        <li>Go to <b>Security</b> is on the left side of the screen.</li>
         <li>Press on the 2 step verification.</li>
         <li>Scroll to the bottom of the page.</li>
         <li>Press on App password.</li>
@@ -19,5 +19,5 @@
     </ul>
     <li>Run the following command on the python -m venv <-name of the virtual enviroment-> </li>
     <li>Run the command on the console pip install -r requirements.txt.</li>
-    <li>Run the command *python email_information.py*</li>
+    <li>Run the command <b>python email_information.py</b></li>
 </ol>
